@@ -41,7 +41,8 @@ extension MoreMoviesCollectionViewCell: MovieViewController{
         switch change {
         case .success:
             self.searchMoreMoviesButton.isEnabled = true
-            break
+        case .error(let error):
+            showAlert(title: error.localizedDescription)
         default:
             break
         }

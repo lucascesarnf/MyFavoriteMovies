@@ -11,7 +11,7 @@ import Foundation
 class DetailViewModel: MovieViewModel, DataBaseViewModel, BaseDetailViewModel{
     
     //MARK:- Private variables
-    private(set) var movie: MovieDTO!
+    private(set) var movie: MovieDTO?
     
     //MARK:- Public variables
     var state: MovieState
@@ -27,24 +27,26 @@ class DetailViewModel: MovieViewModel, DataBaseViewModel, BaseDetailViewModel{
     }
     
     func saveMovieOrRemoveFavorite(){
-        if(movie.favorite!){
-            self.movie.favorite = false
-            self.remove(movieId: movieId)
-        }else{
-            self.movie.favorite = true
-            save(movie: movie)
+        if let movie = movie {
+            if movie.favorite ?? false {
+                self.movie?.favorite = false
+                self.remove(movieId: movieId)
+            }else{
+                self.movie?.favorite = true
+                save(movie: movie)
+            }
         }
     }
     
     //MARK:- BaseDetailViewModel
     func numberOfGenres() -> Int {
-        guard let genres = movie.genres else { return 0 }
+        guard let genres = movie?.genres else { return 0 }
         
         return genres.count
     }
     
-    func getGenreViewModel(index: Int) -> GenreViewModel {
-        let genreViewModel = GenreViewModel(genre: movie.genres![index], style: .secondary)
+    func getGenreViewModel(index: Int) -> GenreViewModel? {
+        let genreViewModel = GenreViewModel(genre: movie?.genres![index], style: .secondary)
         
         return genreViewModel
     }
@@ -59,7 +61,7 @@ class DetailViewModel: MovieViewModel, DataBaseViewModel, BaseDetailViewModel{
         }catch{
             MovieService.shared().getMovieDetail(id: movieId){ movie, response, requestError in
                 if requestError != nil{
-                    self.onChange!(MovieState.Change.error)
+                    self.onChange!(MovieState.Change.error(requestError!))
                 }else{
                     self.movie = movie
                     self.movie?.favorite = false

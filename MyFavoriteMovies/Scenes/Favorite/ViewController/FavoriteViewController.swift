@@ -54,7 +54,7 @@ extension FavoriteViewController: FavoriteCellViewModelDelegate{
     }
     
     func removeFavoriteMovie(id: Int) {
-        let alert = UIAlertController(title: NSLocalizedString("Are you sure?", comment: ""), message: "", preferredStyle: .alert)
+        let alert = UIAlertController(title: NSLocalizedString("SearchMoviesError", comment: ""), message: "", preferredStyle: .alert)
 
         alert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default, handler: {action in
             self.viewModel.remove(movieId: id)
@@ -78,13 +78,11 @@ extension FavoriteViewController: MovieViewController{
         case .success:
             favoriteMoviesTable.hideEmptyCell()
             categoriesCollection.hideEmptyCell()
-            break
         case .emptyResult:
             favoriteMoviesTable.showEmptyCell(string: NSLocalizedString("Empty favorites", comment: ""))
             categoriesCollection.showEmptyCell(string: NSLocalizedString("Empty categories", comment: ""))
-            break
-        default:
-            break
+        case .error(let error):
+            showAlert(title: error.localizedDescription)
         }
     }
     
@@ -101,10 +99,8 @@ extension FavoriteViewController: DataBaseViewController{
             selectedCategoryLabel.text = viewModel.selectedCategoryName
             favoriteMoviesTable.reloadData()
             categoriesCollection.reloadData()
-            break
         case .error:
             showAlert(title: NSLocalizedString("DataBaseAccessError", comment: ""))
-            break
         default:
             break
         }

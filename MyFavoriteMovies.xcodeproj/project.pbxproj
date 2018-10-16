@@ -54,6 +54,7 @@
 		78C8F69E214C36C0006013CB /* UIView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8F69D214C36C0006013CB /* UIView+Additions.swift */; };
 		78F9992E21663B5C00FF24D8 /* FavoriteCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F9992D21663B5C00FF24D8 /* FavoriteCellViewModel.swift */; };
 		A1C72CAB2174BB5A00EB63A9 /* MyFavoriteMovies.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A1C72CA92174BB5A00EB63A9 /* MyFavoriteMovies.xcdatamodeld */; };
+		A1C72CAF2176143B00EB63A9 /* UIImageView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C72CAE2176143B00EB63A9 /* UIImageView+Additions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -111,6 +112,7 @@
 		78E415522146D71700BFF64C /* InterfaceBuilderKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InterfaceBuilderKit.framework; path = Library/Frameworks/InterfaceBuilderKit.framework; sourceTree = DEVELOPER_DIR; };
 		78F9992D21663B5C00FF24D8 /* FavoriteCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCellViewModel.swift; sourceTree = "<group>"; };
 		A1C72CAA2174BB5A00EB63A9 /* MyFavoriteMovies.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MyFavoriteMovies.xcdatamodel; sourceTree = "<group>"; };
+		A1C72CAE2176143B00EB63A9 /* UIImageView+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Additions.swift"; sourceTree = "<group>"; };
 		B869EDD1CA83E51DE855A178 /* Pods-MyFavoriteMovies.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyFavoriteMovies.release.xcconfig"; path = "Pods/Target Support Files/Pods-MyFavoriteMovies/Pods-MyFavoriteMovies.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -144,6 +146,7 @@
 				78C4801C2154163500D587CB /* Date+Additions.swift */,
 				785B9E12215A5B1000475F1E /* UICollectionView+Additions.swift */,
 				785B9E14215A608200475F1E /* UITableView+Additions.swift */,
+				A1C72CAE2176143B00EB63A9 /* UIImageView+Additions.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -553,6 +556,7 @@
 			files = (
 				A1C72CAB2174BB5A00EB63A9 /* MyFavoriteMovies.xcdatamodeld in Sources */,
 				785B9E13215A5B1000475F1E /* UICollectionView+Additions.swift in Sources */,
+				A1C72CAF2176143B00EB63A9 /* UIImageView+Additions.swift in Sources */,
 				7817C59A216263A2008CCE55 /* AppConstants.swift in Sources */,
 				785B9E15215A608200475F1E /* UITableView+Additions.swift in Sources */,
 				7811FAE3214C529300A1564F /* SuggestionCollectionViewCell.swift in Sources */,
@@ -742,7 +746,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PNTT39UXP5;
 				INFOPLIST_FILE = MyFavoriteMovies/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -765,7 +769,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PNTT39UXP5;
 				INFOPLIST_FILE = MyFavoriteMovies/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -807,6 +811,7 @@
 			children = (
 				A1C72CAA2174BB5A00EB63A9 /* MyFavoriteMovies.xcdatamodel */,
 			);
+			currentVersion = A1C72CAA2174BB5A00EB63A9 /* MyFavoriteMovies.xcdatamodel */;
 			path = MyFavoriteMovies.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

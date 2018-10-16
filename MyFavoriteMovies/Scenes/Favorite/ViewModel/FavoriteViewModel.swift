@@ -47,7 +47,7 @@ class FavoriteViewModel: MovieViewModel, DataBaseViewModel, ScrollViewModel{
                 categoryList.insert(allCategory, at: 0)
             }
         }catch{
-            onChangeDataBase!(MovieState.Change.error)
+            onChangeDataBase!(MovieState.Change.error(ServiceError.defaultError))
         }
     }
     
@@ -112,9 +112,9 @@ class FavoriteViewModel: MovieViewModel, DataBaseViewModel, ScrollViewModel{
         switch change {
         case .success:
             selectedCategoryIndex = nil
-            break
-        default:
-            onChangeDataBase!(MovieState.Change.error)
+        case .error(let error):
+            onChangeDataBase!(MovieState.Change.error(error))
+        default: break
         }
     }
     

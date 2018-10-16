@@ -12,10 +12,27 @@ import Foundation
 struct MovieState{
     enum Change{
         case success
-        case error
+        case error(Error)
         case emptyResult
     }
 }
+
+//MARK:- Default Error
+enum ServiceError:Error {
+    case defaultError
+    var localizedDescription: String {
+        return NSLocalizedString("SearchMoviesError", comment: "")
+    }
+}
+/*
+struct DefaultError: Error {
+    static func getError() -> Error {
+        return Error(self)
+    }
+    var localizedDescription: String {
+        return NSLocalizedString("SearchMoviesError", comment: "")
+    }
+}*/
 
 //MARK:- MovieViewModel
 protocol MovieViewModel{
@@ -39,7 +56,7 @@ extension DataBaseViewModel{
             self.changeDataBase(change: MovieState.Change.success)
         }catch let error{
             print("Erro ao remover: ", error)
-            self.changeDataBase(change: MovieState.Change.error)
+            self.changeDataBase(change: MovieState.Change.error(error))
         }
     }
     
@@ -49,7 +66,7 @@ extension DataBaseViewModel{
             self.changeDataBase(change: MovieState.Change.success)
         }catch let error{
             print("Erro ao salvar: ", error)
-            self.changeDataBase(change: MovieState.Change.error)
+            self.changeDataBase(change: MovieState.Change.error(error))
         }
     }
 }
@@ -62,10 +79,10 @@ protocol ScrollViewModel{
 
 //MARK:- BaseDetailViewModel
 protocol BaseDetailViewModel{
-    var movie: MovieDTO! { get }
+    var movie: MovieDTO? { get }
     
     func numberOfGenres() -> Int
-    func getGenreViewModel(index: Int) -> GenreViewModel
+    func getGenreViewModel(index: Int) -> GenreViewModel?
     var posterPath: String { get }
     var title: String { get }
     var voteCount: String { get }
@@ -79,34 +96,34 @@ protocol BaseDetailViewModel{
 extension BaseDetailViewModel{
     
     var posterPath:  String{
-        guard let path = movie.poster_path else { return "" }
+        guard let path = movie?.poster_path else { return "" }
         
         return AppConstants.BaseImageURL + Quality.high.rawValue + "/" + path
     }
     
     var title: String{
-        return movie.title ?? "Titulo desconhecido"
+        return movie?.title ?? "Titulo desconhecido"
     }
     
     var voteAverage: String{
-        guard let average = movie.vote_average else { return "0" }
+        guard let average = movie?.vote_average else { return "0" }
         
         return String(average)
     }
     
     var voteCount: String{
-        guard let count = movie.vote_count else { return "(0)" }
+        guard let count = movie?.vote_count else { return "(0)" }
         
         return "(" + String(count) + ")"
     }
     
     
     var overview: String{
-        return movie.overview ?? "Não há resumo"
+        return movie?.overview ?? "Não há resumo"
     }
     
     var year: String{
-        guard let releaseDate = movie.release_date else { return "0000" }
+        guard let releaseDate = movie?.release_date else { return "0000" }
         
         if !releaseDate.isEmpty{
             return String((releaseDate.split(separator: "-").first)!)
@@ -116,12 +133,12 @@ extension BaseDetailViewModel{
     }
     
     var runtime: String{
-        guard let runtime = movie.runtime else { return "00h 00m" }
+        guard let runtime = movie?.runtime else { return "00h 00m" }
         
         return String(runtime / 60) + "h" + String(runtime % 60) + "m"
     }
     
     var creationDate: String{
-        return movie.creation_date != nil ? (movie.creation_date?.toString(dateFormat: "dd-MM-yyyy"))! : "00-00-0000"
+        return movie?.creation_date != nil ? (movie?.creation_date?.toString(dateFormat: "dd-MM-yyyy"))! : "00-00-0000"
     }
 }

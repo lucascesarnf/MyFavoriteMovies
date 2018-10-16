@@ -29,7 +29,7 @@ class SearchCollectionViewCell : UICollectionViewCell{
     
     //MARK:- Private functions
     func configure(){
-        posterImage.sd_setImage(with: URL(string: viewModel.posterPath), placeholderImage: UIImage(named: AppConstants.placeHolder))
+        posterImage.setImage(with:URL(string: viewModel.posterPath))
     }
     
     //MARK:- Public functions

@@ -16,34 +16,40 @@ enum GenreStyle: Int{
 class GenreViewModel{
     
     //MARK:- Private variables
-    private let genre: Genre
-    private let style: GenreStyle
+    private let genre: Genre?
+    private let style: GenreStyle?
     
     //MARK:- Public variables
     var name: String{
-        return genre.name ?? "Genero"
+        return genre?.name ?? "Genero"
     }
     
     var textColor: UIColor{
-        switch style {
-        case GenreStyle.pattern:
-            return AppConstants.textColorPattern
-        case GenreStyle.secondary:
-            return AppConstants.textColorPattern
+        if let style = style {
+            switch style {
+            case GenreStyle.pattern:
+                return AppConstants.textColorPattern
+            case GenreStyle.secondary:
+                return AppConstants.textColorPattern
+            }
         }
+        return .clear
     }
     
     var backGroundColor: UIColor{
-        switch style {
-        case GenreStyle.pattern:
-            return AppConstants.colorPattern
-        case GenreStyle.secondary:
-            return AppConstants.colorSecondary
+        if let style = style {
+            switch style {
+            case GenreStyle.pattern:
+                return AppConstants.colorPattern
+            case GenreStyle.secondary:
+                return AppConstants.colorSecondary
+            }
         }
+        return .clear
     }
     
     //MARK:- Public methods
-    init(genre: Genre, style : GenreStyle){
+    init(genre: Genre?, style : GenreStyle?){
         self.genre = genre
         self.style = style
     }

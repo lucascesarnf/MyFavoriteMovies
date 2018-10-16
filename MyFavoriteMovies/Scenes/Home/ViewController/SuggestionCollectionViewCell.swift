@@ -23,7 +23,7 @@ class SuggestionCollectionViewCell: UICollectionViewCell{
     //MARK:- Private methods
     private func configure(){
         posterImageView.setLittleBorderFeatured()
-        posterImageView.sd_setImage(with: URL(string: viewModel.posterPath), placeholderImage: UIImage(named: AppConstants.placeHolder))
+        posterImageView.setImage(with:URL(string: viewModel.posterPath))
     }
     
     //MARK:- Public methods

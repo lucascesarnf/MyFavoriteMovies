@@ -12,7 +12,7 @@ class HomeViewModel: MovieViewModel, BaseDetailViewModel{
     
     //MARK:- Private variables
     private var moviePageList: [MoviePageDTO]!
-    private(set) var movie: MovieDTO!
+    private(set) var movie: MovieDTO?
     
     //MARK:- Public variables
     var state: MovieState
@@ -20,13 +20,23 @@ class HomeViewModel: MovieViewModel, BaseDetailViewModel{
     
     private func searchMoviePage(sort: Sort, order: Order, label: String, isBestMovieHere: Bool){
         MovieService.shared().getMoviePage(sort: sort, order: order){ newMoviePage, response, error in
+            if let error = error {
+                self.onChange!(MovieState.Change.error(error))
+                return
+            }
             var moviePage = newMoviePage
-            moviePage.label = label
-            self.moviePageList.append(moviePage)
+            moviePage?.label = label
+            if let moviePage = moviePage {
+             self.moviePageList.append(moviePage)
+            }
             
             if isBestMovieHere{
-                if let bestMovie = moviePage.results.first{
+                if let bestMovie = moviePage?.results.first{
                     MovieService.shared().getMovieDetail(id: bestMovie.id!){ movie, response, error in
+                        if let error = error {
+                            self.onChange!(MovieState.Change.error(error))
+                            return
+                        }
                         self.movie = movie
                         self.onChange!(MovieState.Change.success)
                     }
@@ -39,10 +49,15 @@ class HomeViewModel: MovieViewModel, BaseDetailViewModel{
     
     private func searchTrendingMoviePage(label: String){
         MovieService.shared().getTrendingMovies(){ newMoviePage, response, error in
+            if let error = error {
+                self.onChange!(MovieState.Change.error(error))
+                return
+            }
             var moviePage = newMoviePage
             moviePage?.label = label
-            self.moviePageList.append(moviePage!)
-            
+            if let moviePage = moviePage {
+                self.moviePageList.append(moviePage)
+            }
             self.onChange!(MovieState.Change.success)
         }
     }
@@ -108,15 +123,15 @@ class HomeViewModel: MovieViewModel, BaseDetailViewModel{
     
     //MARK:- BaseDetailViewModel
     func numberOfGenres() -> Int {
-        if(movie.genres == nil){
+        if(movie?.genres == nil){
             return 0
         }
         
-        return movie.genres!.count
+        return movie?.genres?.count  ?? 0
     }
     
-    func getGenreViewModel(index: Int) -> GenreViewModel {
-        let genreViewModel = GenreViewModel(genre: movie.genres![index], style: .pattern)
+    func getGenreViewModel(index: Int) -> GenreViewModel? {
+        let genreViewModel = GenreViewModel(genre: movie?.genres?[index], style: .pattern)
         
         return genreViewModel
     }

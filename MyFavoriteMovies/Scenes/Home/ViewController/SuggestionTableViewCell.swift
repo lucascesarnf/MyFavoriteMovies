@@ -60,7 +60,8 @@ extension SuggestionTableViewCell: MovieViewController{
         case .success:
             categoryLabelView.text = viewModel.moviePage.label
             self.suggestionMoviesCollectionView.reloadData()
-            break
+        case .error(let error):
+            showAlert(title: error.localizedDescription)
         default:
             break
         }

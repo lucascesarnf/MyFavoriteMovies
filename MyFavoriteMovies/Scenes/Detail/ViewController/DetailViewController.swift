@@ -70,8 +70,7 @@ class DetailViewController : UIViewController{
     }
     
     private func setFields(){
-        
-        posterImage.sd_setImage(with: URL(string: viewModel.posterPath), placeholderImage: UIImage(named: AppConstants.placeHolder))
+        posterImage.setImage(with: URL(string: viewModel.posterPath))
         
         yearLabel.text = viewModel.year
         titleLabel.text = viewModel.title
@@ -105,9 +104,8 @@ extension DetailViewController: MovieViewController{
         switch change {
         case .success:
             setFields()
-            break
-        case .error:
-            break
+        case .error(let error):
+            showAlert(title: error.localizedDescription)
         case .emptyResult:
             break
         }
@@ -120,10 +118,7 @@ extension DetailViewController: DataBaseViewController{
         switch change {
         case .success:
             setButtonState()
-            break
-        case .error:
-            break
-        case .emptyResult:
+        default:
             break
         }
     }
@@ -138,7 +133,9 @@ extension DetailViewController :  UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenreCollectionViewCell.identifier, for: indexPath) as! GenreCollectionViewCell
         
-        cell.setup(viewModel: viewModel.getGenreViewModel(index: indexPath.row))
+        if let viewModel = viewModel.getGenreViewModel(index: indexPath.row) {
+            cell.setup(viewModel: viewModel)
+        }
         
         return cell
     }

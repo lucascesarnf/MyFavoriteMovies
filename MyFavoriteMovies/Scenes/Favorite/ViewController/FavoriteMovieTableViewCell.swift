@@ -51,9 +51,7 @@ class FavoriteMovieTableViewCell: UITableViewCell{
     
     //MARK:- Private methods
     private func setFields(){
-        
-        posterImage.sd_setImage(with: URL(string: viewModel.posterPath), placeholderImage: UIImage(named: AppConstants.placeHolder))
-        
+        posterImage.setImage(with: URL(string: viewModel.posterPath))
         titleLabel.text = viewModel.title
         voteCountLabel.text = viewModel.voteCount
         voteAverageLabel.text = viewModel.voteAverage
@@ -86,7 +84,8 @@ extension FavoriteMovieTableViewCell: MovieViewController{
         switch change {
         case .success:
             setFields()
-            break
+        case .error(let error):
+            showAlert(title: error.localizedDescription)
         default:
             break
         }
@@ -106,7 +105,9 @@ extension FavoriteMovieTableViewCell: UICollectionViewDataSource, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenreCollectionViewCell.identifier, for: indexPath) as! GenreCollectionViewCell
         
-        cell.setup(viewModel: viewModel.getGenreViewModel(index: indexPath.row))
+        if let viewModel = viewModel.getGenreViewModel(index: indexPath.row) {
+            cell.setup(viewModel: viewModel)
+        }
         
         return cell
     }

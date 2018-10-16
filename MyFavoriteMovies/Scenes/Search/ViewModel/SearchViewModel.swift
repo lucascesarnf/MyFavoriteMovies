@@ -53,13 +53,15 @@ class SearchViewModel : MovieViewModel, ScrollViewModel{
             MovieService.shared().getMoviePageByName(query: searchQuery){ moviePage, reponse, requestError in
                 if requestError != nil{
                     self.moviePage = MoviePageDTO()
-                    self.onChange!(MovieState.Change.error)
-                }else if moviePage.results.isEmpty{
-                    self.moviePage = MoviePageDTO()
-                    self.onChange!(MovieState.Change.emptyResult)
-                }else{
-                    self.moviePage = moviePage
-                    self.onChange!(MovieState.Change.success)
+                    self.onChange!(MovieState.Change.error(requestError!))
+                }else if let moviePage = moviePage {
+                    if moviePage.results.isEmpty {
+                        self.moviePage = MoviePageDTO()
+                        self.onChange!(MovieState.Change.emptyResult)
+                    }else{
+                        self.moviePage = moviePage
+                        self.onChange!(MovieState.Change.success)
+                    }
                 }
             }
         }

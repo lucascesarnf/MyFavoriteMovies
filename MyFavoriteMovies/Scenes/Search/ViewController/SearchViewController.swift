@@ -57,9 +57,8 @@ extension SearchViewController: MovieViewController{
         case .success:
             movieCollection.hideEmptyCell()
             break
-        case .error:
-            movieCollection.showEmptyCell(string: NSLocalizedString("SearchMoviesError", comment: ""))
-            break
+        case .error(let error):
+            showAlert(title: error.localizedDescription)
         case .emptyResult:
             movieCollection.showEmptyCell(string: NSLocalizedString("SearchMovies", comment: ""))
             break

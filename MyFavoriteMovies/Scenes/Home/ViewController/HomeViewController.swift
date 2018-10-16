@@ -48,7 +48,7 @@ class HomeViewController: UIViewController {
     
     //MARK:- Private methods
     private func setBestMovie(){
-        bestMovieImage.sd_setImage(with: URL(string: viewModel.posterPath), placeholderImage: UIImage(named: AppConstants.placeHolder))
+        bestMovieImage.setImage(with:URL(string: viewModel.posterPath))
         
         self.bestMovieYearLabel.text = viewModel.year
         self.bestMovieTitleLabel.text = viewModel.title
@@ -82,7 +82,8 @@ extension HomeViewController: MovieViewController{
         switch change {
         case .success:
             self.setBestMovie()
-            break
+        case .error(let error):
+            showAlert(title: error.localizedDescription)
         default:
             break
         }
@@ -120,8 +121,9 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenreCollectionViewCell.identifier, for: indexPath) as! GenreCollectionViewCell
-        
-        cell.setup(viewModel: viewModel.getGenreViewModel(index: indexPath.row))
+        if let viewModel = viewModel.getGenreViewModel(index: indexPath.row) {
+            cell.setup(viewModel: viewModel)
+        }
         
         return cell
     }
