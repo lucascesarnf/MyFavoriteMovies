@@ -58,7 +58,7 @@ class DetailViewController : UIViewController{
     
     //MARK:- Private Functions
     private func setButtonState(){
-        if (viewModel.movie?.favorite)!{
+        if viewModel.movie?.favorite ?? false {
             self.favoriteButton.backgroundColor = AppConstants.colorSecondary
             self.favoriteButton.setTitle(NSLocalizedString("Remove", comment: ""), for: UIControl.State.normal)
             self.favoriteButton.setTitleColor(AppConstants.colorFeatured, for: UIControl.State.normal)

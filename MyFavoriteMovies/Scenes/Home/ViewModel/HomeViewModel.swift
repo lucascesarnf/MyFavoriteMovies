@@ -123,7 +123,7 @@ class HomeViewModel: MovieViewModel, BaseDetailViewModel{
     
     //MARK:- BaseDetailViewModel
     func numberOfGenres() -> Int {
-        if(movie?.genres == nil){
+        if movie?.genres == nil {
             return 0
         }
         

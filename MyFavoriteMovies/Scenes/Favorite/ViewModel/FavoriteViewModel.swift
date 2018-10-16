@@ -29,7 +29,7 @@ class FavoriteViewModel: MovieViewModel, DataBaseViewModel, ScrollViewModel{
             allMoviesList = try MovieRepository.shared().getAllMovies()
             categoryList = try MovieRepository.shared().getAllCategories()
             
-            if(categoryList.count > 0){
+            if categoryList.count > 0 {
                 categoryList.sort(by: { $0.name! < $1.name! })
                 allMoviesList.sort(by: { $0.title! < $1.title! })
                 
